@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# builds
+dist/
+dist-ssr/
+
+# env & secrets (never commit real values)
+.env
+.env.*
+!.env.example
+.dev.vars
+*.local
+
+# cloudflare / wrangler state
+.wrangler/
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.tsbuildinfo

@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String          @id @unique @default(uuid())
+  email      String          @unique
+  verified   Boolean?        @default(false)
+  username   String
+  imageURL   String?
+  google_id  String?
+  password   String?
+  posts      Post[]
+  SavedBlogs SavedBlogs[]
+  Upvote     Upvotes[]
+  Dislike    Dislikes[]
+  Following  Relationships[] @relation("Following")
+  Followers  Relationships[] @relation("Followers")
+}
+
+model Post {
+  id          String       @id @unique @default(uuid())
+  title       String
+  brief       String?
+  content     Json
+  imageURL    String?
+  summary     String?
+  published   Boolean      @default(false)
+  publishedAt String
+  author      User         @relation(fields: [author_id], references: [id])
+  author_id   String
+  postTag     String[]
+  likeCount   Int          @default(0)
+  dislikeCount Int         @default(0)
+  SavedBlogs  SavedBlogs[]
+  Upvote      Upvotes[]
+  Dislike     Dislikes[]
+}
+
+model SavedBlogs {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  @@unique([postId, userId])
+}
+
+model Upvotes {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  @@unique([userId, postId])
+}
+
+model Dislikes {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  @@unique([userId, postId])
+}
+
+// refer to readme for why i did this
+model Relationships {
+  id           String  @id @default(uuid())
+  following    String?
+  followers    String?
+  followingIds User?   @relation("Following", fields: [following], references: [id])
+  followerIds  User?   @relation("Followers", fields: [followers], references: [id])
+
+  @@unique([following, followers])
+}
+
+
+// just to let you know the @@unique  represents that the relation with the 2 should stay unique. There must not be any duplicate ones that already exist. 
+// For Ex. if a user has already upvoted for the post 
+// user1 --> post1 
+// then user one won't be able to again upvote rather it would be counted as devote and will be deleted from Upvotes 

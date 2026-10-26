@@ -1,0 +1,24 @@
+{
+  "name": "backend-medium",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.1",
+    "@om_wadhi/common": "^1.2.4",
+    "@prisma/client": "^6.6.0",
+    "@prisma/extension-accelerate": "^1.2.1",
+    "@types/bcryptjs": "^2.4.6",
+    "axios": "^1.7.7",
+    "bcryptjs": "^2.4.3",
+    "hono": "^4.6.8",
+    "resend": "^4.0.1-alpha.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "otpauth": "^9.3.4",
+    "prisma": "^6.6.0",
+    "wrangler": "^4.22.0"
+  }
+}

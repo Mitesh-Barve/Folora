@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Folora — brand color scheme
+   Mirrored in tailwind.config.js so utilities can use them too.
+   ------------------------------------------------------------------ */
+:root {
+  --color-primary: #233A2E;
+  --color-background: #F7F5EF;
+  --color-accent: #C8A879;
+  --color-text: #292B29;
+
+  --color-surface: #FFFFFF;
+  --color-muted: #657365;
+  --color-border: #DCD9D0;
+
+  --color-primary-hover: #1B2E24;
+  --color-accent-hover: #B89564;
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("/Noto_Sans/myfont.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+  }
+  ::selection {
+    @apply bg-primary text-white;
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply bg-surface border border-line rounded-2xl shadow-card;
+  }
+  .btn-primary {
+    @apply bg-primary text-white rounded-full transition-colors duration-200 hover:bg-primary-hover;
+  }
+  .btn-ghost {
+    @apply border border-line text-ink bg-surface rounded-full transition-colors duration-200 hover:bg-primary hover:text-white hover:border-primary;
+  }
+  .field {
+    @apply bg-surface border border-line rounded-xl text-ink outline-none transition-colors duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10;
+  }
+  .pill {
+    @apply bg-accent-soft text-accent-ink rounded-full;
+  }
+  .brand-link {
+    @apply text-primary transition-colors duration-200 hover:text-primary-hover;
+  }
+}
+
+/* since all the below classes came along with the tiptap & highlight.js extension, there's was no way I can apply the tw-classes directly to div's so i have to figure out the class & id's for it from console on browser */
+.tiptap {
+  outline: none;
+  width: 350px;
+  height: 500px;
+  overflow-y: hidden;
+  overflow: scroll;
+  padding: 0px 10px 0px 20px;
+  @media (min-width: 768px) {
+    width: 520px;
+  }
+  @media (min-width: 1024px) {
+    width: 720px;
+    height: 550px;
+  }
+}
+
+/* you can find the below from the tiptap website/placeholder-extension */
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--color-muted);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  font-size: larger;
+  font-family: inherit;
+  font-weight: 300;
+}
+.is-editor-empty {
+  margin: 0;
+}
+
+/* modern editor floating/bubble toolbar */
+.tiptap-menu button {
+  @apply flex items-center justify-center min-w-[2rem] text-white/70 hover:text-white rounded-lg px-2 py-1.5 transition-colors;
+}
+.tiptap-menu button.is-active {
+  @apply bg-accent text-primary;
+}
+
+/* below classes were copied from tiptap codeblock-lowlight extension */
+
+.hljs-comment,
+.hljs-quote {
+  color: #616161;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-regexp,
+.hljs-link,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #f98181;
+}
+
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #fbbc88;
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #b9f18d;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #faf594;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #70cff8;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+/* ul > li list styling when particular blog content is shown content in shown on  */
+.prose ul {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.prose ul > li {
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.prose ul > li {
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.prose ol > li {
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+.prose ul > li::marker {
+  font-size: 1rem;
+}
+.prose ol {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.prose ol > li::marker {
+  font-size: 1rem;
+}
