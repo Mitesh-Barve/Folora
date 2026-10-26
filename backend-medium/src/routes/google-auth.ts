@@ -18,8 +18,7 @@ const router = new Hono<{
 }>();
 
 router.get("/google", async (c) => {
-  const redirect_uri =
-    `${new URL(c.req.url).origin}/auth/redirect`;
+  const redirect_uri = `${c.env.FRONTEND_URL}/auth/redirect`;
   const scope = "openid email profile";
   const response_type = "code";
   const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${c.env.CLIENT_ID}&redirect_uri=${redirect_uri}&scope=${scope}&response_type=${response_type}`;
@@ -28,8 +27,7 @@ router.get("/google", async (c) => {
 
 router.get("/redirect", async (c) => {
   const code = c.req.query("code");
-  const redirect_uri =
-    `${new URL(c.req.url).origin}/auth/redirect`;
+  const redirect_uri = `${c.env.FRONTEND_URL}/auth/redirect`;
   const token_url = "https://oauth2.googleapis.com/token";
   const params = {
     code: code,
@@ -47,6 +45,7 @@ router.get("/redirect", async (c) => {
   try {
     const tokenResponse = await axios.post(token_url, params);
     const tokens = tokenResponse.data.id_token;
+    console.log("GOOGLE_TOKEN_EXCHANGE_OK");
     type UserData = {
       sub: string;
       email: string;
@@ -110,6 +109,11 @@ router.get("/redirect", async (c) => {
       c.json({ msg: "User Login Success" }, 200);
     }
   } catch (e) {
+    console.log(
+      "GOOGLE_TOKEN_EXCHANGE_FAIL",
+      (e as any)?.response?.status,
+      JSON.stringify((e as any)?.response?.data || (e as any)?.message || String(e))
+    );
     // if any error occurs while decoding token or accessing token
     return c.json({ msg: "error occured" }, 500);
   } finally {

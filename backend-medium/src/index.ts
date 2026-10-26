@@ -10,7 +10,7 @@ const app = new Hono<{
 }>();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://100x-medium.vercel.app"],
+    origin: ["http://localhost:5173", "https://folora.vercel.app"],
     credentials: true,
   })
 );
