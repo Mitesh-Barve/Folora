@@ -1,6 +1,6 @@
 # Folora — A Quiet, Premium Home for Words
 
-Preview: [_](https://folora.vercel.app/)
+Preview: [https://folora.vercel.app](https://folora.vercel.app/)
 
 ## Overview
 
